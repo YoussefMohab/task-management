@@ -1,6 +1,6 @@
 package com.synctech.task_management_system.config;
 
-import com.synctech.task_management_system.filter.JwtFilter;
+import com.synctech.task_management_system.util.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

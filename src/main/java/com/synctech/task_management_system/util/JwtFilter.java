@@ -1,6 +1,5 @@
-package com.synctech.task_management_system.filter;
+package com.synctech.task_management_system.util;
 
-import com.synctech.task_management_system.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
