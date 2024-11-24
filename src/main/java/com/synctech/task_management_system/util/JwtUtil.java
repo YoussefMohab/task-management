@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String jwtSecret = "your_secret_key";
+    private final String jwtSecret = "yoursecretkeyghjjmhngbfv666666123456789123dcsxazxscdvfgnhmgfdsasdfghmjmhngbfvdcsxascdvfbgnhmjhngbfvdc";
     private final int accessTokenExpirationMs = 3600000; // 1 hour
     private final int refreshTokenExpirationMs = 604800000; // 7 days
 

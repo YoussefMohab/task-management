@@ -1,8 +1,8 @@
 package com.synctech.task_management_system.service;
 
+import com.synctech.task_management_system.dto.TokenResponse;
 import com.synctech.task_management_system.dto.UserDTO;
 import com.synctech.task_management_system.entity.Role;
-import com.synctech.task_management_system.entity.RoleName;
 import com.synctech.task_management_system.entity.User;
 import com.synctech.task_management_system.repository.UserRepository;
 import com.synctech.task_management_system.repository.RoleRepository;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
         // Create new user entity
         User user = new User();
-        user.setId(UUID.randomUUID());
+//        user.setId(UUID.randomUUID());
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    public String loginUser(String username, String password) {
+    public TokenResponse loginUser(String username, String password) {
         // Find user by username
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
@@ -66,7 +66,8 @@ public class UserServiceImpl implements UserService {
             if (passwordEncoder.matches(password, user.getPassword())) {
                 String accessToken = jwtUtil.generateAccessToken(user.getId());
                 String refreshToken = jwtUtil.generateRefreshToken(user.getId());
-                return accessToken + " " + refreshToken; // or store them as needed
+
+                return new TokenResponse(accessToken, refreshToken);
             }
         }
         throw new RuntimeException("Invalid username or password");
@@ -76,9 +77,11 @@ public class UserServiceImpl implements UserService {
         if (jwtUtil.validateToken(refreshToken)) {
             String userId = jwtUtil.getUserIdFromToken(refreshToken);
             String newAccessToken = jwtUtil.generateAccessToken(UUID.fromString(userId));
-            String newRefreshToken = jwtUtil.generateRefreshToken(UUID.fromString(userId));
-            return newAccessToken + " " + newRefreshToken;
+//            String newRefreshToken = jwtUtil.generateRefreshToken(UUID.fromString(userId));
+            return newAccessToken;
         }
         throw new RuntimeException("Invalid refresh token");
     }
+
+
 }

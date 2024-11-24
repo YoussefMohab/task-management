@@ -1,5 +1,6 @@
 package com.synctech.task_management_system.rest;
 
+import com.synctech.task_management_system.dto.TokenResponse;
 import com.synctech.task_management_system.dto.UserDTO;
 import com.synctech.task_management_system.service.UserService;
 import jakarta.validation.Valid;
@@ -27,16 +28,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestParam String username, @RequestParam String password) {
+    public Map<String, TokenResponse> login(@RequestParam String username, @RequestParam String password) {
         // Login user and generate tokens
-        String tokens = userService.loginUser(username, password);
-        Map<String, String> response = new HashMap<>();
+        TokenResponse tokens = userService.loginUser(username, password);
+        Map<String, TokenResponse> response = new HashMap<>();
         response.put("tokens", tokens);
         return response;
     }
 
     @PostMapping("/refresh")
-    public Map<String, String> refresh(@RequestParam String refreshToken) {
+    public Map<String, String> refresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
         // Refresh token using the service layer
         String newTokens = userService.refreshToken(refreshToken);
         Map<String, String> response = new HashMap<>();
